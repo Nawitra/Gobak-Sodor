@@ -1,4 +1,4 @@
-import pygame, sys, player_class
+import pygame, sys, player_class, guard_class
 
 #inisialisasi pygame
 pygame.init()
@@ -20,8 +20,15 @@ player_h = 32
 player_speed = 0.4 
 pemain = player_class.player(player_x, player_y, player_w, player_h, player_speed)
 
-#inisialisasi penjaga
-
+#inisialisasi penjaga 1
+guard1_x = 260 - 24
+guard1_y = 165 - 24
+guard1_w = 48
+guard1_h = 48
+guard1_upper_limit = 35
+guard1_lower_limit = 355
+guard1_speed = 0.2
+penjaga1 = guard_class.guard(guard1_x, guard1_y, guard1_w, guard1_h, guard1_speed)
 
 
 #update screen
@@ -31,6 +38,7 @@ def window():
     pygame.draw.line(screen, guard_line_colour, [260, 30], [260, 360], 1)
     pygame.draw.line(screen, guard_line_colour, [360, 30], [360, 360], 1)
     pygame.draw.line(screen, guard_line_colour, [450, 30], [450, 360], 1)
+    screen.blit(penjaga1.image, (penjaga1.x, penjaga1.y))
     screen.blit(pemain.image, (pemain.x, pemain.y))
     pygame.display.update()
 
@@ -42,9 +50,14 @@ def character():
     pemain.changePos(dt, size[0], size[1])
 
 #penjaga satu
+def guard1():
+    penjaga1.checkWall(guard1_upper_limit, guard1_lower_limit)
+    dt = clock.tick(60)
+    penjaga1.movement(dt)
 
 #mulai game
 while 1:
     window()
     character()
+    guard1()
 
