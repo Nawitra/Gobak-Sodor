@@ -21,7 +21,7 @@ player_w = 32
 player_h = 32
 player_speed = 0.3
 pemain = player_class.player(player_x, player_y, player_w, player_h, player_speed)
-
+    
 #invisible wall
 guard_upper_limit = 35
 guard_lower_limit = 355
@@ -32,7 +32,13 @@ guard1_y = 165 - 24
 guard1_w = 48
 guard1_h = 48
 guard1_speed = 0.2
-guard1_image = pygame.image.load("image/Penjaga 1.png")
+guard1_image = [pygame.image.load("image/Penjaga 1/Penjaga 1-1.png"),
+                pygame.image.load("image/Penjaga 1/Penjaga 1-1.png"),
+                pygame.image.load("image/Penjaga 1/Penjaga 1-1.png"),
+                pygame.image.load("image/Penjaga 1/Penjaga 1-3.png"),
+                pygame.image.load("image/Penjaga 1/Penjaga 1-3.png"),
+                pygame.image.load("image/Penjaga 1/Penjaga 1-3.png")]
+guard1_counter = 0
 penjaga1 = guard_class.guard(guard1_x, guard1_y, guard1_w, guard1_h, guard1_speed)
 
 #inisialisasi penjaga 2
@@ -41,7 +47,19 @@ guard2_y = 165 - 8
 guard2_w = 16
 guard2_h = 16
 guard2_speed = 0.6
-guard2_image = pygame.image.load("image/Penjaga 2.png")
+guard2_image = [pygame.image.load("image/Penjaga 2/Penjaga 2-1.png"),
+                pygame.image.load("image/Penjaga 2/Penjaga 2-1.png"),
+                pygame.image.load("image/Penjaga 2/Penjaga 2-1.png"),
+                pygame.image.load("image/Penjaga 2/Penjaga 2-2.png"),
+                pygame.image.load("image/Penjaga 2/Penjaga 2-2.png"),
+                pygame.image.load("image/Penjaga 2/Penjaga 2-2.png"),
+                pygame.image.load("image/Penjaga 2/Penjaga 2-3.png"),
+                pygame.image.load("image/Penjaga 2/Penjaga 2-3.png"),
+                pygame.image.load("image/Penjaga 2/Penjaga 2-3.png"),
+                pygame.image.load("image/Penjaga 2/Penjaga 2-4.png"),
+                pygame.image.load("image/Penjaga 2/Penjaga 2-4.png"),
+                pygame.image.load("image/Penjaga 2/Penjaga 2-4.png")]
+guard2_counter = 0
 penjaga2 = guard_class.guard(guard2_x, guard2_y, guard2_w, guard2_h, guard2_speed)
 
 #inisialisasi penjaga 3
@@ -50,20 +68,45 @@ guard3_y = 165 - 16
 guard3_w = 32
 guard3_h = 32
 guard3_speed = 0.3
-guard3_image = pygame.image.load("image/Penjaga 3.png")
+guard3_image = [pygame.image.load("image/Penjaga 3/Penjaga 3-1.png"),
+                pygame.image.load("image/Penjaga 3/Penjaga 3-1.png"),
+                pygame.image.load("image/Penjaga 3/Penjaga 3-1.png"),
+                pygame.image.load("image/Penjaga 3/Penjaga 3-2.png"),
+                pygame.image.load("image/Penjaga 3/Penjaga 3-2.png"),
+                pygame.image.load("image/Penjaga 3/Penjaga 3-2.png"),
+                pygame.image.load("image/Penjaga 3/Penjaga 3-3.png"),
+                pygame.image.load("image/Penjaga 3/Penjaga 3-3.png"),
+                pygame.image.load("image/Penjaga 3/Penjaga 3-3.png"),
+                pygame.image.load("image/Penjaga 3/Penjaga 3-4.png"),
+                pygame.image.load("image/Penjaga 3/Penjaga 3-4.png"),
+                pygame.image.load("image/Penjaga 3/Penjaga 3-4.png")]
+guard3_counter = 0
 penjaga3 = guard_class.guard(guard3_x, guard3_y, guard3_w, guard3_h, guard3_speed)
 
+#-------------------------------------------------
 
 #update screen
 def window(text):
+    global guard1_counter
+    global guard2_counter
+    global guard3_counter
     screen.blit(background_image, (0, 0))
-    screen.blit(guard1_image, (penjaga1.x, penjaga1.y))
-    screen.blit(guard2_image, (penjaga2.x, penjaga2.y))
-    screen.blit(guard3_image, (penjaga3.x, penjaga3.y))    
+    if(guard1_counter == 6):
+        guard1_counter = 0
+    if(guard2_counter == 12):
+        guard2_counter = 0
+    if(guard3_counter == 12):
+        guard3_counter = 0
+    screen.blit(guard1_image[guard1_counter], (penjaga1.x, penjaga1.y))    
+    screen.blit(guard2_image[guard2_counter], (penjaga2.x, penjaga2.y))
+    screen.blit(guard3_image[guard3_counter], (penjaga3.x, penjaga3.y))    
     screen.blit(pemain.image, (pemain.x, pemain.y))
     screen.blit(text, (20, 20))
     clock.tick(60)
     pygame.display.flip()
+    guard1_counter += 1
+    guard2_counter += 1
+    guard3_counter += 1
 
 
 #menggerakkan karakter
@@ -131,7 +174,7 @@ def checkTimeAndCollision():
     detectCollision2(text)
     detectCollision3(text)
     window(text)
-    if(time_passed > 10):
+    if(time_passed > 6):
         sys.exit()
 
 start_time= pygame.time.get_ticks()    
@@ -146,5 +189,3 @@ while 1:
         guard1()
         guard2()
         guard3()
-        print(flag)
-
