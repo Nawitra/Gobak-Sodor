@@ -1,4 +1,4 @@
-import pygame, sys, player_class, guard_class
+import pygame, sys, player_class, guard_class, main_menu
 
 #inisialisasi pygame
 pygame.init()
@@ -196,13 +196,12 @@ def checkTimeAndCollision():
     detectCollision2(text)
     detectCollision3(text)
     window(text)
-    if(time_passed > 5):
+    if(time_passed > 10):
         pygame.mixer.stop()
         pygame.mixer.music.load("music/GameOver.mp3")
         pygame.mixer.music.play(0)
         main_menu.masukSini()
         
-
 def timer_start():
     global start_time
     start_time = pygame.time.get_ticks()
@@ -217,6 +216,7 @@ def start_game():
             flag = 1
         if(pemain.x <= (148 - pemain.w) and flag == 1):
             pygame.mixer.stop()
+            main_menu.masukSiniWin()
             sys.exit()
         else:
             checkTimeAndCollision()
