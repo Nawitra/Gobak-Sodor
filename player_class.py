@@ -11,7 +11,7 @@ class player():
         self.image = pygame.image.load("image/Player 1.png")
     def boundCheck(self, size_x = 0, size_y = 0):
         if self.x < 35:
-            self.x = 25
+            self.x = 75
         if self.x > size_x - 10:
             self.x = size_x - 10
         if self.y < 25:

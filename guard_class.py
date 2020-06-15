@@ -7,7 +7,6 @@ class guard():
         self.w = w
         self.h = h
         self.speed = speed
-        self.image = pygame.image.load("image/Penjaga 1.png")
     def checkWall(self, upper_limit = 0, lower_limit = 0):
         if (self.y < upper_limit or (self.y + self.h) > lower_limit):
             self.speed = -(self.speed)
