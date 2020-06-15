@@ -8,11 +8,14 @@ pygame.display.set_caption("Gobak Sodor: Reborn")
 size = [640, 400]
 background_image = pygame.image.load("image/Background.png")
 timer_colour = [255, 255, 255]
+programIcon = pygame.image.load("image/Logo.png")
+pygame.display.set_icon(programIcon)
 screen = pygame.display.set_mode(size)
 clock = pygame.time.Clock()
 dt = clock.tick(60)
 flag = 0
 font = pygame.font.SysFont('Consolas', 30)
+
 
 #inisialisasi karakter pemain
 player_x = size[0] - 565
@@ -23,7 +26,7 @@ player_speed = 0.3
 pemain = player_class.player(player_x, player_y, player_w, player_h, player_speed)
     
 #invisible wall
-guard_upper_limit = 35
+guard_upper_limit = 40
 guard_lower_limit = 355
 
 #inisialisasi penjaga 1
@@ -195,8 +198,7 @@ def checkTimeAndCollision(flag):
     if(time_passed > 10):
         sys.exit()
 
-start_time= pygame.time.get_ticks()
-while 1:
+def start_game(flag):
     if(pemain.x >= (500 + pemain.w)):
         flag = 1
     if(pemain.x <= (148 - pemain.w) and flag == 1):
@@ -207,3 +209,7 @@ while 1:
         guard1()
         guard2()
         guard3()
+
+start_time= pygame.time.get_ticks()
+start_game(flag)
+
