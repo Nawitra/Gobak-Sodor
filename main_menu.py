@@ -206,6 +206,7 @@ def masukSiniWin():
                         main.penjaga2.y = 155
                         main.penjaga3.y = 147
                         main.flag = 0
+                        main.pemain.key_pressed[0] = False
                         if(main.time_limit > 5):
                             main.time_limit -= 1
                             masukAwal()
