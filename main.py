@@ -13,6 +13,7 @@ guard_line_colour = [255, 255, 255]
 screen = pygame.display.set_mode(size)
 clock = pygame.time.Clock()
 dt = clock.tick(60)
+flag = 0
 
 #inisialisasi karakter pemain
 player_x = size[0] - 565
@@ -121,14 +122,19 @@ def detectCollision3():
         while(pemain.x > temp):
             pemain.x -= 2
             window()
-    
+
+start_time= pygame.time.get_ticks()    
 while 1:
-    window()
-    character()
-    guard1()
-    guard2()
-    guard3()
-    detectCollision1()
-    detectCollision2()
-    detectCollision3()
+    time_passed = (pygame.time.get_ticks() - start_time) / 1000
+    if(time_passed > 10):
+        break
+    else:
+        window()
+        character()
+        guard1()
+        guard2()
+        guard3()
+        detectCollision1()
+        detectCollision2()
+        detectCollision3()
 
