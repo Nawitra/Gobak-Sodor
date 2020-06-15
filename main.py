@@ -15,6 +15,8 @@ screen = pygame.display.set_mode(size)
 clock = pygame.time.Clock()
 dt = clock.tick(60)
 flag = 0
+ultrahot = 0
+time_limit = 10
 font = pygame.font.SysFont('Consolas', 30)
 #gameover_music = pygame.mixer.music.load("music/GameOver.mp3")
 
@@ -112,7 +114,6 @@ def window(text):
     guard2_counter += 1
     guard3_counter += 1
 
-
 #menggerakkan karakter
 def character():
     pemain.getEvent(size[0], size[1])
@@ -188,7 +189,9 @@ def detectCollision3(text):
                 pemain.x += 2
                 window(text)
 
+#cek waktu berlangsung dan kolisi dengan penjaga
 def checkTimeAndCollision():
+    global time_limit
     time_passed = (pygame.time.get_ticks() - start_time) / 1000
     timer = str(time_passed)
     text = font.render(timer, True, timer_colour)
@@ -196,17 +199,43 @@ def checkTimeAndCollision():
     detectCollision2(text)
     detectCollision3(text)
     window(text)
-    if(time_passed > 10):
+    if(time_passed > time_limit):
         pygame.mixer.stop()
         pygame.mixer.music.load("music/GameOver.mp3")
         pygame.mixer.music.play(0)
         main_menu.masukSini()
-        
+
+#menghidupkan timer
 def timer_start():
     global start_time
     start_time = pygame.time.get_ticks()
     start_game()
 
+#memperlambat / mempercepat pergerakan penjaga
+def adjustSpeedAndDirection():
+    global ultrahot
+    if(all(elem == False for elem in pemain.key_pressed)):
+        if(ultrahot == 0):
+            penjaga1.speed = 0.1 if (penjaga1.speed == 0.2) else -0.1
+            penjaga2.speed = 0.3 if (penjaga2.speed == 0.6) else -0.3
+            penjaga3.speed = 0.2 if (penjaga3.speed == 0.3) else -0.2
+            ultrahot = 1
+        else:
+            guard1()
+            guard2()
+            guard3()
+    else:
+        if(ultrahot == 1):
+            penjaga1.speed = 0.2 if (penjaga1.speed == 0.1) else -0.2
+            penjaga2.speed = 0.6 if (penjaga2.speed == 0.3) else -0.6
+            penjaga3.speed = 0.3 if (penjaga3.speed == 0.2) else -0.3
+            ultrahot = 0
+        else:
+            guard1()
+            guard2()
+            guard3()
+
+#memulai game
 def start_game():
     global flag
     pygame.mixer.music.load("music/Gameplay.mp3")
@@ -221,9 +250,7 @@ def start_game():
         else:
             checkTimeAndCollision()
             character()
-            guard1()
-            guard2()
-            guard3()
+            adjustSpeedAndDirection()
 
 
 

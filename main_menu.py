@@ -3,7 +3,6 @@ import pygame, sys, main
 #inisialisasi pygame
 pygame.init()
 pygame.display.set_caption("Gobak Sodor: Reborn")
-#home_image = pygame.image.load("image/home.png")
 
 #inisialisasi game
 size = [640, 400]
@@ -13,6 +12,7 @@ background_color = [90, 84, 107]
 screen = pygame.display.set_mode(size)
 clock = pygame.time.Clock()
 dt = clock.tick(60)
+temp = 0
 
 #untuk munculin teks
 fontGede = pygame.font.Font("res/8bitOperatorPlusSC-Regular.ttf",80)
@@ -188,6 +188,7 @@ def masukSini():
 
 def masukSiniWin():
     parameter = 1
+    global temp
     while 1:
         for event in pygame.event.get():
             youWin(parameter)
@@ -200,7 +201,14 @@ def masukSiniWin():
                     if parameter == 1:
                         main.start_time = 0
                         main.flag = 0
-                        masukAwal()
+                        if(temp <= 5):
+                            temp += 1
+                            main.start_time += temp
+                            masukAwal()
+                        else:
+                            temp = 5
+                            main.start_time += temp
+                            masukAwal()
                     else:
                         pygame.quit()
                         quit()
