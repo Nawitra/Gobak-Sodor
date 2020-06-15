@@ -7,13 +7,12 @@ pygame.display.set_caption("Gobak Sodor: Reborn")
 #inisialisasi game
 size = [640, 400]
 background_image = pygame.image.load("image/Background.png")
-background_colour = [90, 84, 107]
-player_line_colour = [131, 198, 106]
-guard_line_colour = [255, 255, 255]
+timer_colour = [255, 255, 255]
 screen = pygame.display.set_mode(size)
 clock = pygame.time.Clock()
 dt = clock.tick(60)
 flag = 0
+font = pygame.font.SysFont('Consolas', 30)
 
 #inisialisasi karakter pemain
 player_x = size[0] - 565
@@ -56,12 +55,13 @@ penjaga3 = guard_class.guard(guard3_x, guard3_y, guard3_w, guard3_h, guard3_spee
 
 
 #update screen
-def window():
+def window(text):
     screen.blit(background_image, (0, 0))
     screen.blit(guard1_image, (penjaga1.x, penjaga1.y))
     screen.blit(guard2_image, (penjaga2.x, penjaga2.y))
     screen.blit(guard3_image, (penjaga3.x, penjaga3.y))    
     screen.blit(pemain.image, (pemain.x, pemain.y))
+    screen.blit(text, (20, 20))
     clock.tick(60)
     pygame.display.flip()
 
@@ -123,18 +123,23 @@ def detectCollision3():
             pemain.x -= 2
             window()
 
+def checkTime():
+    time_passed = (pygame.time.get_ticks() - start_time) / 1000
+    timer = str(time_passed)
+    text = font.render(timer, True, timer_colour)
+    window(text)
+    if(time_passed > 10):
+        sys.exit()
+    
+
 start_time= pygame.time.get_ticks()    
 while 1:
-    time_passed = (pygame.time.get_ticks() - start_time) / 1000
-    if(time_passed > 10):
-        break
-    else:
-        window()
-        character()
-        guard1()
-        guard2()
-        guard3()
-        detectCollision1()
-        detectCollision2()
-        detectCollision3()
+    checkTime()
+    character()
+    guard1()
+    guard2()
+    guard3()
+    detectCollision1()
+    detectCollision2()
+    detectCollision3()
 
