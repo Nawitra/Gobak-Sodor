@@ -2,6 +2,7 @@ import pygame, sys, player_class, guard_class
 
 #inisialisasi pygame
 pygame.init()
+pygame.mixer.init()
 pygame.display.set_caption("Gobak Sodor: Reborn")
 
 #inisialisasi game
@@ -15,7 +16,7 @@ clock = pygame.time.Clock()
 dt = clock.tick(60)
 flag = 0
 font = pygame.font.SysFont('Consolas', 30)
-
+#gameover_music = pygame.mixer.music.load("music/GameOver.mp3")
 
 #inisialisasi karakter pemain
 player_x = size[0] - 565
@@ -30,8 +31,8 @@ guard_upper_limit = 40
 guard_lower_limit = 355
 
 #inisialisasi penjaga 1
-guard1_x = 260 - 24
-guard1_y = 165 - 24
+guard1_x = 260 - 26
+guard1_y = 165 - 26
 guard1_w = 48
 guard1_h = 48
 guard1_speed = 0.2
@@ -45,8 +46,8 @@ guard1_counter = 0
 penjaga1 = guard_class.guard(guard1_x, guard1_y, guard1_w, guard1_h, guard1_speed)
 
 #inisialisasi penjaga 2
-guard2_x = 360 - 8
-guard2_y = 165 - 8
+guard2_x = 360 - 10
+guard2_y = 165 - 10
 guard2_w = 16
 guard2_h = 16
 guard2_speed = 0.6
@@ -66,8 +67,8 @@ guard2_counter = 0
 penjaga2 = guard_class.guard(guard2_x, guard2_y, guard2_w, guard2_h, guard2_speed)
 
 #inisialisasi penjaga 3
-guard3_x = 450 - 16
-guard3_y = 165 - 16
+guard3_x = 450 - 18
+guard3_y = 165 - 18
 guard3_w = 32
 guard3_h = 32
 guard3_speed = 0.3
@@ -133,7 +134,7 @@ def guard3():
     penjaga3.checkWall(guard_upper_limit, guard_lower_limit)
     penjaga3.movement(dt)
 
-def detectCollision1(text, flag):
+def detectCollision1(text):
     #kolisi antara pemain dengan penjaga 1
     if(pemain.x > (penjaga1.x + penjaga1.w) or pemain.x < penjaga1.x):
         pemain.x = pemain.x
@@ -151,7 +152,7 @@ def detectCollision1(text, flag):
                 pemain.x += 3
                 window(text)
 
-def detectCollision2(text, flag):
+def detectCollision2(text):
     #kolisi antara pemain dengan penjaga 1
     if(pemain.x > (penjaga2.x + penjaga2.w) or pemain.x < penjaga2.x):
         pemain.x = pemain.x
@@ -169,7 +170,7 @@ def detectCollision2(text, flag):
                 pemain.x += 2
                 window(text)
 
-def detectCollision3(text, flag):
+def detectCollision3(text):
     #kolisi antara pemain dengan penjaga 1
     if(pemain.x > (penjaga3.x + penjaga3.w) or pemain.x < penjaga3.x):
         pemain.x = pemain.x
@@ -187,29 +188,36 @@ def detectCollision3(text, flag):
                 pemain.x += 2
                 window(text)
 
-def checkTimeAndCollision(flag):
+def checkTimeAndCollision():
     time_passed = (pygame.time.get_ticks() - start_time) / 1000
     timer = str(time_passed)
     text = font.render(timer, True, timer_colour)
-    detectCollision1(text, flag)
-    detectCollision2(text, flag)
-    detectCollision3(text, flag)
+    detectCollision1(text)
+    detectCollision2(text)
+    detectCollision3(text)
     window(text)
     if(time_passed > 10):
+        pygame.mixer.stop()
+        pygame.mixer.music.load("music/GameOver.mp3")
+        pygame.mixer.music.play(0)
         sys.exit()
 
-def start_game(flag):
-    if(pemain.x >= (500 + pemain.w)):
-        flag = 1
-    if(pemain.x <= (148 - pemain.w) and flag == 1):
-        sys.exit()
-    else:
-        checkTimeAndCollision(flag)
-        character()
-        guard1()
-        guard2()
-        guard3()
+def start_game():
+    global flag
+    pygame.mixer.music.load("music/Gameplay.mp3")
+    pygame.mixer.music.play(0)
+    while 1:
+        if(pemain.x >= (500 + pemain.w)):
+            flag = 1
+        if(pemain.x <= (148 - pemain.w) and flag == 1):
+            sys.exit()
+        else:
+            checkTimeAndCollision()
+            character()
+            guard1()
+            guard2()
+            guard3()
 
 start_time= pygame.time.get_ticks()
-start_game(flag)
+start_game()
 

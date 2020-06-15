@@ -7,7 +7,7 @@ pygame.display.set_caption("Gobak Sodor: Reborn")
 
 #inisialisasi game
 size = [640, 400]
-menuChoose = 0
+menuChoose = 1
 background_color = [90, 84, 107]
 screen = pygame.display.set_mode(size)
 clock = pygame.time.Clock()
@@ -59,6 +59,7 @@ def homescreen(parameter):
 
 while True:
     for event in pygame.event.get():
+        homescreen(menuChoose)
         if event.type == pygame.QUIT:
             pygame.quit()
             quit()
@@ -71,8 +72,7 @@ while True:
                 if menuChoose == 1:
                     #ke game ini fungsinya
                     while 1:
-                        main.start_game(main.flag)
+                        main.start_game()
                 else:
                     pygame.quit()
                     quit()
-        homescreen(menuChoose)
