@@ -93,7 +93,10 @@ def detectCollision1():
     elif(pemain.y > (penjaga1.y + penjaga1.h) or pemain.y < penjaga1.y):
         pemain.x = pemain.x
     else:
-        pemain.x = 75
+        temp = pemain.x - 70
+        while(pemain.x > temp):
+            pemain.x -= 3
+            window()
 
 def detectCollision2():
     #kolisi antara pemain dengan penjaga 1
@@ -102,7 +105,10 @@ def detectCollision2():
     elif(pemain.y > (penjaga2.y + penjaga2.h) or pemain.y < penjaga2.y):
         pemain.x = pemain.x
     else:
-        pemain.x = 75
+        temp = pemain.x - 20
+        while(pemain.x > temp):
+            pemain.x -= 1
+            window()
 
 def detectCollision3():
     #kolisi antara pemain dengan penjaga 1
@@ -111,7 +117,10 @@ def detectCollision3():
     elif(pemain.y > (penjaga3.y + penjaga3.h) or pemain.y < penjaga3.y):
         pemain.x = pemain.x
     else:
-        pemain.x = 75
+        temp = pemain.x - 50
+        while(pemain.x > temp):
+            pemain.x -= 2
+            window()
     
 while 1:
     window()
