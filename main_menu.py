@@ -181,6 +181,8 @@ def masukSini():
                     parameter = 0
                 if event.key == pygame.K_RETURN:
                     if parameter == 1:
+                        pygame.mixer.music.load("music/Gameplay.mp3")
+                        pygame.mixer.music.play(-1)
                         main.start_time = 0
                         main.pemain.x = 75
                         main.pemain.y = 180
