@@ -142,12 +142,12 @@ def detectCollision1(text):
         pemain.x = pemain.x
     else:
         if(flag == 0):
-            temp = pemain.x - 80
+            temp = pemain.x - 100
             while(pemain.x > temp):
                 pemain.x -= 3
                 window(text)
         elif(flag == 1):
-            temp = pemain.x + 80
+            temp = pemain.x + 100
             while(pemain.x < temp):
                 pemain.x += 3
                 window(text)
@@ -157,24 +157,6 @@ def detectCollision2(text):
     if(pemain.x > (penjaga2.x + penjaga2.w) or pemain.x < penjaga2.x):
         pemain.x = pemain.x
     elif(pemain.y > (penjaga2.y + penjaga2.h) or pemain.y < penjaga2.y):
-        pemain.x = pemain.x
-    else:
-        if(flag == 0):
-            temp = pemain.x - 30
-            while(pemain.x > temp):
-                pemain.x -= 2
-                window(text)
-        elif(flag == 1):
-            temp = pemain.x + 30
-            while(pemain.x < temp):
-                pemain.x += 2
-                window(text)
-
-def detectCollision3(text):
-    #kolisi antara pemain dengan penjaga 1
-    if(pemain.x > (penjaga3.x + penjaga3.w) or pemain.x < penjaga3.x):
-        pemain.x = pemain.x
-    elif(pemain.y > (penjaga3.y + penjaga3.h) or pemain.y < penjaga3.y):
         pemain.x = pemain.x
     else:
         if(flag == 0):
@@ -188,6 +170,24 @@ def detectCollision3(text):
                 pemain.x += 2
                 window(text)
 
+def detectCollision3(text):
+    #kolisi antara pemain dengan penjaga 1
+    if(pemain.x > (penjaga3.x + penjaga3.w) or pemain.x < penjaga3.x):
+        pemain.x = pemain.x
+    elif(pemain.y > (penjaga3.y + penjaga3.h) or pemain.y < penjaga3.y):
+        pemain.x = pemain.x
+    else:
+        if(flag == 0):
+            temp = pemain.x - 80
+            while(pemain.x > temp):
+                pemain.x -= 2
+                window(text)
+        elif(flag == 1):
+            temp = pemain.x + 80
+            while(pemain.x < temp):
+                pemain.x += 2
+                window(text)
+
 def checkTimeAndCollision():
     time_passed = (pygame.time.get_ticks() - start_time) / 1000
     timer = str(time_passed)
@@ -196,11 +196,17 @@ def checkTimeAndCollision():
     detectCollision2(text)
     detectCollision3(text)
     window(text)
-    if(time_passed > 10):
+    if(time_passed > 5):
         pygame.mixer.stop()
         pygame.mixer.music.load("music/GameOver.mp3")
         pygame.mixer.music.play(0)
-        sys.exit()
+        main_menu.masukSini()
+        
+
+def timer_start():
+    global start_time
+    start_time = pygame.time.get_ticks()
+    start_game()
 
 def start_game():
     global flag
@@ -210,6 +216,7 @@ def start_game():
         if(pemain.x >= (500 + pemain.w)):
             flag = 1
         if(pemain.x <= (148 - pemain.w) and flag == 1):
+            pygame.mixer.stop()
             sys.exit()
         else:
             checkTimeAndCollision()
@@ -218,6 +225,5 @@ def start_game():
             guard2()
             guard3()
 
-start_time= pygame.time.get_ticks()
-start_game()
+
 

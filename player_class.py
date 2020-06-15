@@ -1,4 +1,6 @@
-import sys, pygame
+import sys, pygame, main_menu
+
+pygame.mixer.init()
 
 class player():
     def __init__(self, x = 0, y = 0, w = 0, h = 0, speed = 0):
@@ -24,13 +26,18 @@ class player():
                 sys.exit()
             if event.type == pygame.KEYDOWN: 
                 if event.key == pygame.K_LEFT:
-                    self.key_pressed[0] = True
+                    self.key_pressed[0] = True  
                 if event.key == pygame.K_RIGHT and self.x < size_x-70:
                     self.key_pressed[1] = True
                 if event.key == pygame.K_UP and self.y > 0:
                     self.key_pressed[2] = True
                 if event.key == pygame.K_DOWN and self.y < size_y-70:
                     self.key_pressed[3] = True
+                if event.key == pygame.K_ESCAPE:
+                    pygame.mixer.stop()
+                    pygame.mixer.music.load("music/GameOver.mp3")
+                    pygame.mixer.music.play(0)
+                    main_menu.masukSini()
                 else:
                     continue
             if event.type == pygame.KEYUP:
