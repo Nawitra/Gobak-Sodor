@@ -87,7 +87,7 @@ def guard3():
     penjaga3.checkWall(guard_upper_limit, guard_lower_limit)
     penjaga3.movement(dt)
 
-def detectCollision1():
+def detectCollision1(text):
     #kolisi antara pemain dengan penjaga 1
     if(pemain.x > (penjaga1.x + penjaga1.w) or pemain.x < penjaga1.x):
         pemain.x = pemain.x
@@ -97,9 +97,9 @@ def detectCollision1():
         temp = pemain.x - 70
         while(pemain.x > temp):
             pemain.x -= 3
-            window()
+            window(text)
 
-def detectCollision2():
+def detectCollision2(text):
     #kolisi antara pemain dengan penjaga 1
     if(pemain.x > (penjaga2.x + penjaga2.w) or pemain.x < penjaga2.x):
         pemain.x = pemain.x
@@ -109,9 +109,9 @@ def detectCollision2():
         temp = pemain.x - 20
         while(pemain.x > temp):
             pemain.x -= 1
-            window()
+            window(text)
 
-def detectCollision3():
+def detectCollision3(text):
     #kolisi antara pemain dengan penjaga 1
     if(pemain.x > (penjaga3.x + penjaga3.w) or pemain.x < penjaga3.x):
         pemain.x = pemain.x
@@ -121,25 +121,30 @@ def detectCollision3():
         temp = pemain.x - 50
         while(pemain.x > temp):
             pemain.x -= 2
-            window()
+            window(text)
 
-def checkTime():
+def checkTimeAndCollision():
     time_passed = (pygame.time.get_ticks() - start_time) / 1000
     timer = str(time_passed)
     text = font.render(timer, True, timer_colour)
+    detectCollision1(text)
+    detectCollision2(text)
+    detectCollision3(text)
     window(text)
     if(time_passed > 10):
         sys.exit()
-    
 
 start_time= pygame.time.get_ticks()    
 while 1:
-    checkTime()
-    character()
-    guard1()
-    guard2()
-    guard3()
-    detectCollision1()
-    detectCollision2()
-    detectCollision3()
+    if(pemain.x >= (500 + pemain.w)):
+        flag = 1
+    if(pemain.x <= (148 - pemain.w) and flag == 1):
+        sys.exit()
+    else:
+        checkTimeAndCollision()
+        character()
+        guard1()
+        guard2()
+        guard3()
+        print(flag)
 
