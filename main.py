@@ -92,7 +92,7 @@ penjaga3 = guard_class.guard(guard3_x, guard3_y, guard3_w, guard3_h, guard3_spee
 #-------------------------------------------------
 
 #update screen
-def window(text):
+def window(text, time_text):
     global guard1_counter
     global guard2_counter
     global guard3_counter
@@ -108,6 +108,7 @@ def window(text):
     screen.blit(guard3_image[guard3_counter], (penjaga3.x, penjaga3.y))    
     screen.blit(pemain.image, (pemain.x, pemain.y))
     screen.blit(text, (20, 20))
+    screen.blit(time_text, (520, 20))
     clock.tick(60)
     pygame.display.flip()
     guard1_counter += 1
@@ -195,10 +196,11 @@ def checkTimeAndCollision():
     time_passed = (pygame.time.get_ticks() - start_time) / 1000
     timer = str(time_passed)
     text = font.render(timer, True, timer_colour)
+    time_text = font.render(str(time_limit), True, timer_colour)
     detectCollision1(text)
     detectCollision2(text)
     detectCollision3(text)
-    window(text)
+    window(text, time_text)
     if(time_passed > time_limit):
         pygame.mixer.stop()
         pygame.mixer.music.load("music/GameOver.mp3")
@@ -216,9 +218,9 @@ def adjustSpeedAndDirection():
     global ultrahot
     if(all(elem == False for elem in pemain.key_pressed)):
         if(ultrahot == 0):
-            penjaga1.speed = 0.1 if (penjaga1.speed == 0.2) else -0.1
-            penjaga2.speed = 0.3 if (penjaga2.speed == 0.6) else -0.3
-            penjaga3.speed = 0.2 if (penjaga3.speed == 0.3) else -0.2
+            penjaga1.speed = 0.03 if (penjaga1.speed == 0.4) else -0.03
+            penjaga2.speed = 0.08 if (penjaga2.speed == 0.6) else -0.08
+            penjaga3.speed = 0.06 if (penjaga3.speed == 0.3) else -0.06
             ultrahot = 1
         else:
             guard1()
@@ -226,9 +228,9 @@ def adjustSpeedAndDirection():
             guard3()
     else:
         if(ultrahot == 1):
-            penjaga1.speed = 0.2 if (penjaga1.speed == 0.1) else -0.2
-            penjaga2.speed = 0.6 if (penjaga2.speed == 0.3) else -0.6
-            penjaga3.speed = 0.3 if (penjaga3.speed == 0.2) else -0.3
+            penjaga1.speed = 0.4 if (penjaga1.speed == 0.03) else -0.4
+            penjaga2.speed = 0.6 if (penjaga2.speed == 0.08) else -0.6
+            penjaga3.speed = 0.3 if (penjaga3.speed == 0.06) else -0.3
             ultrahot = 0
         else:
             guard1()
@@ -238,8 +240,6 @@ def adjustSpeedAndDirection():
 #memulai game
 def start_game():
     global flag
-    pygame.mixer.music.load("music/Gameplay.mp3")
-    pygame.mixer.music.play(-1)
     while 1:
         if(pemain.x >= (500 + pemain.w)):
             flag = 1

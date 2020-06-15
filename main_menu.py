@@ -2,6 +2,7 @@ import pygame, sys, main
 
 #inisialisasi pygame
 pygame.init()
+pygame.mixer.init()
 pygame.display.set_caption("Gobak Sodor: Reborn")
 
 #inisialisasi game
@@ -181,6 +182,16 @@ def masukSini():
                 if event.key == pygame.K_RETURN:
                     if parameter == 1:
                         main.start_time = 0
+                        main.pemain.x = 75
+                        main.pemain.y = 180
+                        main.penjaga1.y = 139
+                        main.penjaga2.y = 155
+                        main.penjaga3.y = 147
+                        main.flag = 0
+                        main.pemain.key_pressed[0] = False
+                        main.pemain.key_pressed[1] = False
+                        main.pemain.key_pressed[2] = False
+                        main.pemain.key_pressed[3] = False
                         masukAwal()
                     else:
                         pygame.quit()
@@ -207,11 +218,14 @@ def masukSiniWin():
                         main.penjaga3.y = 147
                         main.flag = 0
                         main.pemain.key_pressed[0] = False
-                        if(main.time_limit > 5):
+                        main.pemain.key_pressed[1] = False
+                        main.pemain.key_pressed[2] = False
+                        main.pemain.key_pressed[3] = False
+                        if(main.time_limit > 4):
                             main.time_limit -= 1
                             masukAwal()
                         else:
-                            main.time_limit = 5
+                            main.time_limit = 4
                             masukAwal()
                     else:
                         pygame.quit()
@@ -219,5 +233,7 @@ def masukSiniWin():
     
 
 if __name__ == "__main__":
+    pygame.mixer.music.load("music/Gameplay.mp3")
+    pygame.mixer.music.play(-1)
     while True:
         masukAwal()
