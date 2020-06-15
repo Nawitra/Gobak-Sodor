@@ -130,61 +130,79 @@ def guard3():
     penjaga3.checkWall(guard_upper_limit, guard_lower_limit)
     penjaga3.movement(dt)
 
-def detectCollision1(text):
+def detectCollision1(text, flag):
     #kolisi antara pemain dengan penjaga 1
     if(pemain.x > (penjaga1.x + penjaga1.w) or pemain.x < penjaga1.x):
         pemain.x = pemain.x
     elif(pemain.y > (penjaga1.y + penjaga1.h) or pemain.y < penjaga1.y):
         pemain.x = pemain.x
     else:
-        temp = pemain.x - 70
-        while(pemain.x > temp):
-            pemain.x -= 3
-            window(text)
+        if(flag == 0):
+            temp = pemain.x - 80
+            while(pemain.x > temp):
+                pemain.x -= 3
+                window(text)
+        elif(flag == 1):
+            temp = pemain.x + 80
+            while(pemain.x < temp):
+                pemain.x += 3
+                window(text)
 
-def detectCollision2(text):
+def detectCollision2(text, flag):
     #kolisi antara pemain dengan penjaga 1
     if(pemain.x > (penjaga2.x + penjaga2.w) or pemain.x < penjaga2.x):
         pemain.x = pemain.x
     elif(pemain.y > (penjaga2.y + penjaga2.h) or pemain.y < penjaga2.y):
         pemain.x = pemain.x
     else:
-        temp = pemain.x - 20
-        while(pemain.x > temp):
-            pemain.x -= 1
-            window(text)
+        if(flag == 0):
+            temp = pemain.x - 30
+            while(pemain.x > temp):
+                pemain.x -= 2
+                window(text)
+        elif(flag == 1):
+            temp = pemain.x + 30
+            while(pemain.x < temp):
+                pemain.x += 2
+                window(text)
 
-def detectCollision3(text):
+def detectCollision3(text, flag):
     #kolisi antara pemain dengan penjaga 1
     if(pemain.x > (penjaga3.x + penjaga3.w) or pemain.x < penjaga3.x):
         pemain.x = pemain.x
     elif(pemain.y > (penjaga3.y + penjaga3.h) or pemain.y < penjaga3.y):
         pemain.x = pemain.x
     else:
-        temp = pemain.x - 50
-        while(pemain.x > temp):
-            pemain.x -= 2
-            window(text)
+        if(flag == 0):
+            temp = pemain.x - 60
+            while(pemain.x > temp):
+                pemain.x -= 2
+                window(text)
+        elif(flag == 1):
+            temp = pemain.x + 60
+            while(pemain.x < temp):
+                pemain.x += 2
+                window(text)
 
-def checkTimeAndCollision():
+def checkTimeAndCollision(flag):
     time_passed = (pygame.time.get_ticks() - start_time) / 1000
     timer = str(time_passed)
     text = font.render(timer, True, timer_colour)
-    detectCollision1(text)
-    detectCollision2(text)
-    detectCollision3(text)
+    detectCollision1(text, flag)
+    detectCollision2(text, flag)
+    detectCollision3(text, flag)
     window(text)
-    if(time_passed > 6):
+    if(time_passed > 10):
         sys.exit()
 
-start_time= pygame.time.get_ticks()    
+start_time= pygame.time.get_ticks()
 while 1:
     if(pemain.x >= (500 + pemain.w)):
         flag = 1
     if(pemain.x <= (148 - pemain.w) and flag == 1):
         sys.exit()
     else:
-        checkTimeAndCollision()
+        checkTimeAndCollision(flag)
         character()
         guard1()
         guard2()
