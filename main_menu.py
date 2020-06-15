@@ -200,14 +200,17 @@ def masukSiniWin():
                 if event.key == pygame.K_RETURN:
                     if parameter == 1:
                         main.start_time = 0
+                        main.pemain.x = 75
+                        main.pemain.y = 180
+                        main.penjaga1.y = 139
+                        main.penjaga2.y = 155
+                        main.penjaga3.y = 147
                         main.flag = 0
-                        if(temp <= 5):
-                            temp += 1
-                            main.start_time += temp
+                        if(main.time_limit > 5):
+                            main.time_limit -= 1
                             masukAwal()
                         else:
-                            temp = 5
-                            main.start_time += temp
+                            main.time_limit = 5
                             masukAwal()
                     else:
                         pygame.quit()

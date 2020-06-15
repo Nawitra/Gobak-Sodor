@@ -16,7 +16,7 @@ clock = pygame.time.Clock()
 dt = clock.tick(60)
 flag = 0
 ultrahot = 0
-time_limit = 10
+time_limit = 8
 font = pygame.font.SysFont('Consolas', 30)
 #gameover_music = pygame.mixer.music.load("music/GameOver.mp3")
 
@@ -239,7 +239,7 @@ def adjustSpeedAndDirection():
 def start_game():
     global flag
     pygame.mixer.music.load("music/Gameplay.mp3")
-    pygame.mixer.music.play(0)
+    pygame.mixer.music.play(-1)
     while 1:
         if(pemain.x >= (500 + pemain.w)):
             flag = 1
